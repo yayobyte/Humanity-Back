@@ -21,11 +21,23 @@ module.exports = {
   //   connection: 'someMysqlServer'
   // },
 
+
   /***************************************************************************
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
 
-  // port: 80,
+  port: 80,
+
+  connections: {
+    someMysqlServer: {
+      adapter: 'sails-mysql',
+      host: process.env.OPENSHIFT_MYSQL_DB_HOST,
+      user: process.env.OPENSHIFT_MYSQL_DB_USERNAME,
+      password: process.env.OPENSHIFT_MYSQL_DB_PASSWORD,
+      database: 'humanityback',
+      port : process.env.OPENSHIFT_MYSQL_DB_PORT
+    }
+  }
 
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *

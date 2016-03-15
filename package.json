@@ -1,8 +1,8 @@
 {
-  "name": "api",
+  "name": "Humanity Back End",
   "private": true,
   "version": "0.0.0",
-  "description": "a Sails application",
+  "description": "First Sails Application",
   "keywords": [],
   "dependencies": {
     "ejs": "~0.8.4",
@@ -26,7 +26,7 @@
   },
   "scripts": {
     "debug": "node debug app.js",
-    "start": "node app.js"
+    "start": "node app.js --prod"
   },
   "main": "app.js",
   "repository": {
