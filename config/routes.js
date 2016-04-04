@@ -35,10 +35,8 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
-
-  'get /user/imprima': 'UserController.whaat',
-  'post /user/imprima': 'UserController.whaat2',
-  'get /user/:id/imprima': 'UserController.whaat'
+  'get /user/generatecertificate/:userid' : 'UserController.generatePdf',
+  'get /user/downloadcertificate/:file' : 'UserController.downloadPdf'
 
   /***************************************************************************
   *                                                                          *
