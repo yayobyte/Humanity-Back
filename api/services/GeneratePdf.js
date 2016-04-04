@@ -222,7 +222,7 @@ module.exports = {
         bolditalics: fontsPath + 'Roboto-Italic.ttf'
       }
     };
-    var PdfPrinter = require('../vendor/pdfmake/printer');
+    var PdfPrinter = require('pdfmake');
     var printer = new PdfPrinter(fonts);
     var fs = require('fs');
 
