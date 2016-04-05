@@ -4,22 +4,19 @@
  */
 module.exports = {
   getByDocumentNumber : function (userId,next) {
-    var seniorityId = 0;
-    User.find({documentNumber:userId}).exec(function (err, user){
-      var seniorityId = user[0].seniority;
-      if (err) {
-        return res.negotiate(err);
-      }
-      Seniority.find({id : seniorityId}).exec(function (err, seniority){
-        if (err) {
-          return res.negotiate(err);
-        }
-        user[0].seniority = seniority[0].name;
-        next(user);
-
+    User.find({documentNumber:userId})
+      .populate('afp')
+      .populate('documentType')
+      .populate('birthPlace')
+      .populate('nationality')
+      .populate('maritalStatus')
+      .populate('scholarship')
+      .populate('rh')
+      .populate('seniority')
+      .populate('project')
+      .populate('eps')
+      .exec(function (err, user){
+        next(err, user.shift());
       });
-
-    });
-
   }
 };

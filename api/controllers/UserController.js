@@ -6,20 +6,50 @@
  */
 var fs = require('fs');
 module.exports = {
-  generatePdf : function (req,res) {
-    var media, filename, filePath, userFound;
+  generatePdfCertification : function (req,res) {
+    var media, filename, filePath;
     var userId = (req.params.userid) ? req.params.userid : undefined;
-    UserService.getByDocumentNumber(userId,function (user) {
-      media = GeneratePdf.createMedia(user);
-      filename = GeneratePdf.generateDoc(media);
-      filePath = sails.config.paths.pdf + filename + '.pdf';
-      console.log('New file created: ' + filePath);
-      res.send([{
-        "status" : "ok",
-        "tempFileId" : filename
-      }]);
+    UserService.getByDocumentNumber(userId,function (err,user) {
+      if(!err) {
+        if (user) {
+          media = GeneratePdf.generateSeveranceDocDefinition(user);
+          filename = GeneratePdf.generateDoc(media);
+          filePath = sails.config.paths.pdf + filename + '.pdf';
+          console.log('New file created: ' + filePath);
+          res.send([{
+            "status": "ok",
+            "tempFileId": filename
+          }]);
+        }else{
+          res.badRequest("The user does not exist");
+        }
+      }else{
+        res.serverError(err);
+      }
     });
 
+  },
+  generatePdfSeveranceCertification : function (req,res){
+    var media, filename, filePath;
+    var userId = (req.params.userid) ? req.params.userid : undefined;
+    UserService.getByDocumentNumber(userId,function (err,user) {
+      if(!err) {
+        if (user) {
+          media = GeneratePdf.generateSeveranceDocDefinition(user);
+          filename = GeneratePdf.generateDoc(media);
+          filePath = sails.config.paths.pdf + filename + '.pdf';
+          console.log('New file created: ' + filePath);
+          res.send([{
+            "status": "ok",
+            "tempFileId": filename
+          }]);
+        }else{
+          res.badRequest("The user does not exist");
+        }
+      }else{
+        res.serverError(err);
+      }
+    });
   },
   downloadPdf : function (req,res) {
     var filename = req.params.file;
