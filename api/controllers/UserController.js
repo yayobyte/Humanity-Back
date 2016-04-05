@@ -14,10 +14,10 @@ module.exports = {
       filename = GeneratePdf.generateDoc(media);
       filePath = sails.config.paths.pdf + filename + '.pdf';
       console.log('New file created: ' + filePath);
-      res.send({
+      res.send([{
         "status" : "ok",
         "tempFileId" : filename
-      });
+      }]);
     });
 
   },
@@ -43,10 +43,10 @@ module.exports = {
       });
 
     }else{
-      res.badRequest({
+      res.badRequest([{
         "status": "bad request",
         "message" : "No file id was sent, it should be: /user/downloadcertificate/:file"
-      });
+      }]);
     }
 
   }
