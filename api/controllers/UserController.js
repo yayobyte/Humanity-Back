@@ -12,7 +12,7 @@ module.exports = {
     UserService.getByDocumentNumber(userId,function (err,user) {
       if(!err) {
         if (user) {
-          media = GeneratePdf.generateSeveranceDocDefinition(user);
+          media = GeneratePdf.generateCertificationDocDefinition(user);
           filename = GeneratePdf.generateDoc(media);
           filePath = sails.config.paths.pdf + filename + '.pdf';
           console.log('New file created: ' + filePath);
@@ -31,25 +31,31 @@ module.exports = {
   },
   generatePdfSeveranceCertification : function (req,res){
     var media, filename, filePath;
-    var userId = (req.params.userid) ? req.params.userid : undefined;
-    UserService.getByDocumentNumber(userId,function (err,user) {
-      if(!err) {
-        if (user) {
-          media = GeneratePdf.generateSeveranceDocDefinition(user);
-          filename = GeneratePdf.generateDoc(media);
-          filePath = sails.config.paths.pdf + filename + '.pdf';
-          console.log('New file created: ' + filePath);
-          res.send([{
-            "status": "ok",
-            "tempFileId": filename
-          }]);
-        }else{
-          res.badRequest("The user does not exist");
+    if (req.body) {
+      var subject = (req.body.subject) ? req.body.subject : 'Subject';
+      var amount = (req.body.amount) ? req.body.amount : 'Amount';
+      var userId = (req.params.userid) ? req.params.userid : undefined;
+      UserService.getByDocumentNumber(userId, function (err, user) {
+        if (!err) {
+          if (user) {
+            media = GeneratePdf.generateSeveranceDocDefinition(user, subject, amount);
+            filename = GeneratePdf.generateDoc(media);
+            filePath = sails.config.paths.pdf + filename + '.pdf';
+            console.log('New file created: ' + filePath);
+            res.send([{
+              "status": "ok",
+              "tempFileId": filename
+            }]);
+          } else {
+            res.badRequest("The user does not exist");
+          }
+        } else {
+          res.serverError(err);
         }
-      }else{
-        res.serverError(err);
-      }
-    });
+      });
+    }else{
+      res.badRequest('No body was sent');
+    }
   },
   downloadPdf : function (req,res) {
     var filename = req.params.file;
