@@ -35,8 +35,8 @@ module.exports.routes = {
   '/': {
     view: 'homepage'
   },
-  'get /user/generatecertificate/:userid' : 'UserController.generatePdfCertification',
-  'get /user/generateseverance/:userid' :  'UserController.generatePdfSeveranceCertification',
+  'post /user/generatecertificate/:userid' : 'UserController.generatePdfCertification',
+  'post /user/generateseverance/:userid' :  'UserController.generatePdfSeveranceCertification',
   'get /user/downloadcertificate/:file' : 'UserController.downloadPdf'
 
   /***************************************************************************
