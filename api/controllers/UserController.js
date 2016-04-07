@@ -18,10 +18,10 @@ module.exports = {
               filename = GeneratePdf.generateDoc(media);
               filePath = sails.config.paths.pdf + filename + '.pdf';
               console.log('New file created: ' + filePath);
-              res.send([{
+              res.send({
                 "status": "ok",
                 "tempFileId": filename
-              }]);
+              });
             } else {
               res.badRequest("The user does not exist");
             }
@@ -50,10 +50,10 @@ module.exports = {
               filename = GeneratePdf.generateDoc(media);
               filePath = sails.config.paths.pdf + filename + '.pdf';
               console.log('New file created: ' + filePath);
-              res.send([{
+              res.send({
                 "status": "ok",
                 "tempFileId": filename
-              }]);
+              });
             } else {
               res.badRequest("The user does not exist");
             }
