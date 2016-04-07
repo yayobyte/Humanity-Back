@@ -402,7 +402,7 @@ module.exports = {
           fontSize : 8
         },
         {
-          image: imgPath + 'logo.png',
+          image: imgPath + 'logo2.png',
           width : 110
         },
         {
