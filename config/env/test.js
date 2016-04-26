@@ -27,6 +27,7 @@ module.exports = {
    ***************************************************************************/
 
   port: process.env.SAILS_PORT || 8080,
+  host: '0.0.0.0',
 
   connections: {
     someMysqlServer: {
