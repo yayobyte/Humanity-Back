@@ -37,7 +37,8 @@ module.exports.routes = {
   },
   'post /user/generatecertificate' : 'UserController.generatePdfCertification',
   'post /user/generateseverance' :  'UserController.generatePdfSeveranceCertification',
-  'get /user/downloadcertificate/:file' : 'UserController.downloadPdf'
+  'get /user/downloadcertificate/:file' : 'UserController.downloadPdf',
+  'post /user/uploadavatar' : 'UserController.uploadAvatar'
 
   /***************************************************************************
   *                                                                          *

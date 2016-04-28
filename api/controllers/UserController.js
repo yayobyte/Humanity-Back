@@ -36,7 +36,7 @@ module.exports = {
       res.badRequest('No body was sent');
     }
   },
-  generatePdfSeveranceCertification : function (req,res){
+  generatePdfSeveranceCertification: function (req, res) {
     var media, filename, filePath;
     // TODO : Create a body validation service
     if (req.body) {
@@ -61,19 +61,19 @@ module.exports = {
             res.serverError(err);
           }
         });
-      }else{
+      } else {
         res.badRequest("No userId was sent");
       }
-    }else{
+    } else {
       res.badRequest('No body (subject, amount, userId) was sent');
     }
   },
-  downloadPdf : function (req,res) {
+  downloadPdf: function (req, res) {
     var filename = req.params.file;
     var filePath = sails.config.paths.pdf + filename + '.pdf';
     console.log("Download requested: " + filePath);
     if (filename) {
-      fs.exists(filePath, function(exists) {
+      fs.exists(filePath, function (exists) {
         if (exists) {
           var readStream = fs.createReadStream(filePath);
 
@@ -88,13 +88,32 @@ module.exports = {
           res.badRequest("That file id does not exist");
         }
       });
-    }else{
+    } else {
       res.badRequest([{
         "status": "bad request",
-        "message" : "No file id was sent, it should be: /user/downloadcertificate/:file"
+        "message": "No file id was sent, it should be: /user/downloadcertificate/:file"
       }]);
     }
-  }
+  },
+
+  uploadAvatar: function (req, res) {
+    req.file('avatar').upload({
+      // don't allow the total upload size to exceed ~10MB
+      maxBytes: 10000000
+    }, function whenDone(err, uploadedFiles) {
+      if (err) {
+        return res.negotiate(err);
+      }
+
+      // If no files were uploaded, respond with an error.
+      if (uploadedFiles.length === 0) {
+        return res.badRequest('No file was uploaded');
+      }
+
+      // Save the "fd" and the url where the avatar for a user can be accessed
+      res.send('File Uploaded');
+    });
+  },
 
 };
 
