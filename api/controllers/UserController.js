@@ -97,21 +97,24 @@ module.exports = {
   },
 
   uploadAvatar: function (req, res) {
-    req.file('avatar').upload({
-      // don't allow the total upload size to exceed ~10MB
+    var fields = req.body;
+    chunkRealName = fields.flowFilename;
+    file = req.file('file');
+    file.upload({
+      saveAs:chunkRealName,
       maxBytes: 10000000
     }, function whenDone(err, uploadedFiles) {
       if (err) {
         return res.negotiate(err);
       }
-
+      console.log(uploadedFiles);
       // If no files were uploaded, respond with an error.
       if (uploadedFiles.length === 0) {
         return res.badRequest('No file was uploaded');
       }
 
       // Save the "fd" and the url where the avatar for a user can be accessed
-      res.send('File Uploaded');
+      res.send(200, 'File Uploaded');
     });
   },
 
