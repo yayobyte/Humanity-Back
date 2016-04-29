@@ -102,7 +102,8 @@ module.exports = {
     file = req.file('file');
     file.upload({
       saveAs:chunkRealName,
-      maxBytes: 10000000
+      maxBytes: 10000000,
+      dirname: sails.config.appPath + '/assets/images'
     }, function whenDone(err, uploadedFiles) {
       if (err) {
         return res.negotiate(err);
