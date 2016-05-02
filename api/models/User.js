@@ -147,7 +147,6 @@ module.exports = {
     },
     'skill' : {
       type : 'array',
-      required : true,
       columnName: 'skills_array'
     },
     'afp' : {
