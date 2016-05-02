@@ -159,6 +159,11 @@ module.exports = {
       type : 'integer',
       required : true,
       model : 'Eps'
+    },
+    'fc' : {
+      type : 'integer',
+      required : true,
+      model : 'Fc'
     }
   }
 };
