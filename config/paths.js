@@ -5,5 +5,6 @@
 module.exports.paths = {
   fonts : 'api/misc/fonts/',
   images : 'api/misc/img/',
-  pdf : 'downloads/pdf/'
+  pdf : 'downloads/pdf/',
+  avatar : 'assets/images/avatar'
 }
