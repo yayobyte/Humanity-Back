@@ -117,6 +117,9 @@ module.exports = {
       res.send(200, 'File Uploaded');
     });
   },
-
+  importExcel : function(req, res) {
+    var data = UserService.insertDataFromExcel();
+    res.send(200, data);
+  }
 };
 
