@@ -110,16 +110,18 @@ module.exports = {
       columnName: 'personal_email'
     },
     'cellphone' : {
-      type : 'integer',
-      required : true
+      type : 'string',
+      required : true,
+      size: 12
     },
     'contactName' : {
       type : 'string',
       columnName: 'contact_name'
     },
     'contactPhone' : {
-      type : 'integer',
-      columnName: 'contact_phone'
+      type : 'string',
+      columnName: 'contact_phone',
+      size: 12
     },
     'seniority' : {
       type : 'integer',
