@@ -6,7 +6,6 @@
 */
 
 module.exports = {
-
   attributes: {
     'id' : {
       type: 'integer',
@@ -19,6 +18,12 @@ module.exports = {
       type: 'string',
       required : true,
       unique : true
+    },
+    'precedence' : {
+      type: 'integer',
+      required : true,
+      unique : true,
+      defaultsTo: 0
     }
   }
 };
