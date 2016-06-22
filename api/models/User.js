@@ -6,8 +6,6 @@
 */
 
 module.exports = {
-
-
   attributes: {
     'id' : {
       type: 'integer',
@@ -165,6 +163,17 @@ module.exports = {
       type : 'integer',
       required : true,
       model : 'Fc'
+    },
+    'sex' : {
+        type: 'string',
+        required: true,
+        size: 1,
+        columnName: 'sex'
+    },
+    'retirementTime' : {
+      type : 'date',
+      required : false,
+      columnName: 'retirement_date'
     }
   }
 };
