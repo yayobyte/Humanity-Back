@@ -16,12 +16,13 @@ module.exports = {
     var leftColumn = 160;
     var today = new Date ();
     if (user) {
-      position = user.seniority.name ;
-      salary = user.salary.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") ;
-      userName = (user.name + ' ' + user.firstLastName + ' ' +user.secondLastName).toUpperCase() ;
-      userDocumentId = user.documentNumber;
-      hiredDate = user.hiredTime.getDate() + ' de ' + month[user.hiredTime.getMonth() + 1] + ' de ' + user.hiredTime.getFullYear();
-    }else{
+        position = user.seniority.name ;
+        salary   = user.salary.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") ;
+        userName = (user.name + ' ' + user.firstLastName + ' ' +user.secondLastName).toUpperCase() ;
+        userDocumentId = user.documentNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        hiredDate = user.hiredTime.getDate() + ' de ' + month[user.hiredTime.getMonth() + 1] + ' de ' + user.hiredTime.getFullYear();
+    }
+    else {
       position = "Position";
       salary = "Salary" ;
       userName = "User" ;
@@ -59,8 +60,9 @@ module.exports = {
           alignment : "center"
         },
         {
-          text : "Por medio de la presente, certificamos que el señor "+ userName +" identificado con Cédula de Ciudadanía No "
-          + userDocumentId + ", " + "trabajó en nuestra Compañía desde el " + hiredDate+ "."
+            alignment: 'justify',
+            text : "Por medio de la presente, certificamos que el señor " + userName + " identificado con C\u00E9dula de Ciudadan\u00EDa No. "
+                + userDocumentId + ", " + "trabaj\u00F3 en nuestra compa\u00F1\u00EDa desde el " + hiredDate+ "."
         },
         {
           columns : [
@@ -114,14 +116,15 @@ module.exports = {
               bold : true
             },
             {
+              alignment: 'justify',
               width: '*',
               ul: [
-                'Health Insurance (medicina Prepagada) 100% cubierta al empleado, según Plan Salud Colectivo Suramericana.',
-                'Life Insurance según cobertura de vida grupo Suramericana.',
-                'Sports allowance por COP $ 117.700 mensuales para Sports del empleado.',
-                'Child Care Gift Card por COP $ 117.000 mensuales para hijos de nuestro empleado.',
-                'Education allowance hasta por COP $ 856.000 en temas relacionados con su posición dentro de la Compañía.',
-                'Performance Bonus, según política de Compensación & Beneficios de nuestra Compañía.'
+                'Health Insurance (medicina prepagada) 100% cubierta al empleado, seg\u00FAn Plan Salud Colectivo Suramericana.',
+                'Life Insurance seg\u00FAn cobertura de vida grupo Suramericana.',
+                'Sports Allowance por COP $117.700 mensuales para deportes del empleado.',
+                'Child Care Gift Card por COP $117.000 mensuales para hijos del empleado.',
+                'Education Allowance hasta por COP $856.000 en temas relacionados con su posición dentro de la Compañía.',
+                'Performance Bonus, seg\u00FAn pol\u00EDtica de compensaci\u00F3n y beneficios de nuestra compa\u00F1\u00EDa.'
               ]
             }
           ],
