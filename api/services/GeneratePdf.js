@@ -9,12 +9,26 @@
 */
 module.exports = {
   generateCertificationDocDefinition : function (user) {
-    var position, salary, userName, userDocumentId, hiredDate;
-    var imgPath = sails.config.paths.images;
-    var month = {1: "Enero" , 2 : "Febrero" , 3: "Marzo" , 4 : "Abril", 5: "Mayo", 6 : "Junio",
-      7 : "Julio", 8 : "Agosto", 9: "Septiembre", 10: "Octubre", 11 : "Noviembre", 12 : "Diciembre"}
     var leftColumn = 160;
     var today = new Date ();
+    var position, salary, userName, userDocumentId, hiredDate;
+    var imgPath = sails.config.paths.images;
+    var hiredStatementText = '';
+    var month = {
+        1: "Enero"
+      , 2 : "Febrero"
+      , 3: "Marzo" 
+      , 4 : "Abril"
+      , 5: "Mayo"
+      , 6 : "Junio"
+      , 7 : "Julio"
+      , 8 : "Agosto"
+      , 9: "Septiembre"
+      , 10: "Octubre"
+      , 11 : "Noviembre"
+      , 12 : "Diciembre"
+    };
+
     if (user) {
         position = user.seniority.name ;
         salary   = user.salary.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") ;
@@ -23,11 +37,12 @@ module.exports = {
         hiredDate = user.hiredTime.getDate() + ' de ' + month[user.hiredTime.getMonth() + 1] + ' de ' + user.hiredTime.getFullYear();
     }
     else {
-      position = "Position";
-      salary = "Salary" ;
-      userName = "User" ;
-      userDocumentId = "Document";
-      hiredDate = "Date";
+      position           = "Position";
+      salary             = "Salary" ;
+      userName           = "User" ;
+      userDocumentId     = "Document";
+      hiredDate          = "Date";
+      hiredStatementText = 'N/A';
     }
     var docDefinition = {
       content: [
@@ -61,8 +76,11 @@ module.exports = {
         },
         {
             alignment: 'justify',
-            text : "Por medio de la presente, certificamos que el señor " + userName + " identificado con C\u00E9dula de Ciudadan\u00EDa No. "
-                + userDocumentId + ", " + "trabaj\u00F3 en nuestra compa\u00F1\u00EDa desde el " + hiredDate+ "."
+            text : "Por medio de la presente, certificamos que el Señor " 
+                        + userName 
+                        + " identificado con C\u00E9dula de Ciudadan\u00EDa No. "
+                        + userDocumentId + ", " 
+                        + hiredStatementText
         },
         {
           columns : [
@@ -100,7 +118,7 @@ module.exports = {
               bold : true,
               width : leftColumn
             },{
-              text : 'COP $ '+ salary + ' (mensual)',
+              text : 'COP $'+ salary + ' (mensual)',
               margin : [0,20,0,0]
             }
           ]
