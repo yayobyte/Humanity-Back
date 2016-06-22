@@ -35,14 +35,20 @@ module.exports = {
         userName = (user.name + ' ' + user.firstLastName + ' ' +user.secondLastName).toUpperCase() ;
         userDocumentId = user.documentNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         hiredDate = user.hiredTime.getDate() + ' de ' + month[user.hiredTime.getMonth() + 1] + ' de ' + user.hiredTime.getFullYear();
+
+        hiredStatementText = (user.status ? "trabaja " : "trabaj\u00F3 ")
+                            + "en nuestra compa\u00F1\u00EDa " 
+                            + (user.status ? "desde el " : "hasta el ")
+                            // @TODO: if inactive, add retirement date...
+                            + hiredDate + ".";
     }
     else {
-      position           = "Position";
-      salary             = "Salary" ;
-      userName           = "User" ;
-      userDocumentId     = "Document";
-      hiredDate          = "Date";
-      hiredStatementText = 'N/A';
+        position           = "Position";
+        salary             = "Salary" ;
+        userName           = "User" ;
+        userDocumentId     = "Document";
+        hiredDate          = "Date";
+        hiredStatementText = 'N/A';
     }
     var docDefinition = {
       content: [
@@ -53,7 +59,7 @@ module.exports = {
           margin: [0, 20]
         },
         {
-          text: "Certificación Laboral",
+          text: "Certificaci\u00F3n Laboral",
           alignment: 'right',
           fontSize : 10
         },
@@ -64,7 +70,7 @@ module.exports = {
           bold : true
         },
         {
-          text: "Medellín Colombia",
+          text: "Medell\u00EDn, Colombia",
           alignment: 'right',
           fontSize: 10
         },
@@ -76,7 +82,7 @@ module.exports = {
         },
         {
             alignment: 'justify',
-            text : "Por medio de la presente, certificamos que el Señor " 
+            text : "Por medio de la presente, certificamos que el Se\u00F1or " 
                         + userName 
                         + " identificado con C\u00E9dula de Ciudadan\u00EDa No. "
                         + userDocumentId + ", " 
@@ -141,7 +147,7 @@ module.exports = {
                 'Life Insurance seg\u00FAn cobertura de vida grupo Suramericana.',
                 'Sports Allowance por COP $117.700 mensuales para deportes del empleado.',
                 'Child Care Gift Card por COP $117.000 mensuales para hijos del empleado.',
-                'Education Allowance hasta por COP $856.000 en temas relacionados con su posición dentro de la Compañía.',
+                'Education Allowance hasta por COP $856.000 en temas relacionados con su posici\u00F3n dentro de la Compa\u00F1\u00EDa.',
                 'Performance Bonus, seg\u00FAn pol\u00EDtica de compensaci\u00F3n y beneficios de nuestra compa\u00F1\u00EDa.'
               ]
             }
@@ -168,8 +174,11 @@ module.exports = {
         },
         {
           text: [
-            'Medellín: ',
-            { text: 'Cra 38 # 10 - 36', bold: false, color: "black" }
+            'Medell\u00EDn: ',
+            { 
+                text: 'Cra 38 # 10 - 36', 
+                bold: false, color: "black" 
+            }
           ],
           margin : [0,20,0,0],
           bold : true,
@@ -179,7 +188,11 @@ module.exports = {
         {
           text: [
             'Tel: ',
-            { text: '+57 (4) 2686786', bold: false, color: "black" }
+            { 
+                text: '+57 (4) 2686786', 
+                bold: false
+                , color: "black" 
+            }
           ],
           bold : true,
           color: "red",
@@ -188,7 +201,11 @@ module.exports = {
         {
           text: [
             'Mobile: ',
-            { text: '+57 (300) 3054080', bold: false, color: "black" }
+            { 
+                text: '+57 (300) 3054080', 
+                bold: false, 
+                color: "black" 
+            }
           ],
           bold : true,
           color: "red",
