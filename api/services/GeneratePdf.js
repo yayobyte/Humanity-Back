@@ -9,24 +9,46 @@
 */
 module.exports = {
   generateCertificationDocDefinition : function (user) {
-    var position, salary, userName, userDocumentId, hiredDate;
-    var imgPath = sails.config.paths.images;
-    var month = {1: "Enero" , 2 : "Febrero" , 3: "Marzo" , 4 : "Abril", 5: "Mayo", 6 : "Junio",
-      7 : "Julio", 8 : "Agosto", 9: "Septiembre", 10: "Octubre", 11 : "Noviembre", 12 : "Diciembre"}
     var leftColumn = 160;
     var today = new Date ();
+    var position, salary, userName, userDocumentId, hiredDate;
+    var imgPath = sails.config.paths.images;
+    var hiredStatementText = '';
+    var month = {
+        1: "Enero"
+      , 2 : "Febrero"
+      , 3: "Marzo" 
+      , 4 : "Abril"
+      , 5: "Mayo"
+      , 6 : "Junio"
+      , 7 : "Julio"
+      , 8 : "Agosto"
+      , 9: "Septiembre"
+      , 10: "Octubre"
+      , 11 : "Noviembre"
+      , 12 : "Diciembre"
+    };
+
     if (user) {
-      position = user.seniority.name ;
-      salary = user.salary.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") ;
-      userName = (user.name + ' ' + user.firstLastName + ' ' +user.secondLastName).toUpperCase() ;
-      userDocumentId = user.documentNumber;
-      hiredDate = user.hiredTime.getDate() + ' de ' + month[user.hiredTime.getMonth() + 1] + ' de ' + user.hiredTime.getFullYear();
-    }else{
-      position = "Position";
-      salary = "Salary" ;
-      userName = "User" ;
-      userDocumentId = "Document";
-      hiredDate = "Date";
+        position = user.seniority.name ;
+        salary   = user.salary.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,") ;
+        userName = (user.name + ' ' + user.firstLastName + ' ' +user.secondLastName).toUpperCase() ;
+        userDocumentId = user.documentNumber.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        hiredDate = user.hiredTime.getDate() + ' de ' + month[user.hiredTime.getMonth() + 1] + ' de ' + user.hiredTime.getFullYear();
+
+        hiredStatementText = (user.status ? "trabaja " : "trabaj\u00F3 ")
+                            + "en nuestra compa\u00F1\u00EDa " 
+                            + (user.status ? "desde el " : "hasta el ")
+                            // @TODO: if inactive, add retirement date...
+                            + hiredDate + ".";
+    }
+    else {
+        position           = "Position";
+        salary             = "Salary" ;
+        userName           = "User" ;
+        userDocumentId     = "Document";
+        hiredDate          = "Date";
+        hiredStatementText = 'N/A';
     }
     var docDefinition = {
       content: [
@@ -37,7 +59,7 @@ module.exports = {
           margin: [0, 20]
         },
         {
-          text: "Certificación Laboral",
+          text: "Certificaci\u00F3n Laboral",
           alignment: 'right',
           fontSize : 10
         },
@@ -48,7 +70,7 @@ module.exports = {
           bold : true
         },
         {
-          text: "Medellín Colombia",
+          text: "Medell\u00EDn, Colombia",
           alignment: 'right',
           fontSize: 10
         },
@@ -59,8 +81,12 @@ module.exports = {
           alignment : "center"
         },
         {
-          text : "Por medio de la presente, certificamos que el señor "+ userName +" identificado con Cédula de Ciudadanía No "
-          + userDocumentId + ", " + "trabajó en nuestra Compañía desde el " + hiredDate+ "."
+            alignment: 'justify',
+            text : "Por medio de la presente, certificamos que el Se\u00F1or " 
+                        + userName 
+                        + " identificado con C\u00E9dula de Ciudadan\u00EDa No. "
+                        + userDocumentId + ", " 
+                        + hiredStatementText
         },
         {
           columns : [
@@ -98,7 +124,7 @@ module.exports = {
               bold : true,
               width : leftColumn
             },{
-              text : 'COP $ '+ salary + ' (mensual)',
+              text : 'COP $'+ salary + ' (mensual)',
               margin : [0,20,0,0]
             }
           ]
@@ -114,14 +140,15 @@ module.exports = {
               bold : true
             },
             {
+              alignment: 'justify',
               width: '*',
               ul: [
-                'Health Insurance (medicina Prepagada) 100% cubierta al empleado, según Plan Salud Colectivo Suramericana.',
-                'Life Insurance según cobertura de vida grupo Suramericana.',
-                'Sports allowance por COP $ 117.700 mensuales para Sports del empleado.',
-                'Child Care Gift Card por COP $ 117.000 mensuales para hijos de nuestro empleado.',
-                'Education allowance hasta por COP $ 856.000 en temas relacionados con su posición dentro de la Compañía.',
-                'Performance Bonus, según política de Compensación & Beneficios de nuestra Compañía.'
+                'Health Insurance (medicina prepagada) 100% cubierta al empleado, seg\u00FAn Plan Salud Colectivo Suramericana.',
+                'Life Insurance seg\u00FAn cobertura de vida grupo Suramericana.',
+                'Sports Allowance por COP $117.700 mensuales para deportes del empleado.',
+                'Child Care Gift Card por COP $117.000 mensuales para hijos del empleado.',
+                'Education Allowance hasta por COP $856.000 en temas relacionados con su posici\u00F3n dentro de la Compa\u00F1\u00EDa.',
+                'Performance Bonus, seg\u00FAn pol\u00EDtica de compensaci\u00F3n y beneficios de nuestra compa\u00F1\u00EDa.'
               ]
             }
           ],
@@ -147,8 +174,11 @@ module.exports = {
         },
         {
           text: [
-            'Medellín: ',
-            { text: 'Cra 38 # 10 - 36', bold: false, color: "black" }
+            'Medell\u00EDn: ',
+            { 
+                text: 'Cra 38 # 10 - 36', 
+                bold: false, color: "black" 
+            }
           ],
           margin : [0,20,0,0],
           bold : true,
@@ -158,7 +188,11 @@ module.exports = {
         {
           text: [
             'Tel: ',
-            { text: '+57 (4) 2686786', bold: false, color: "black" }
+            { 
+                text: '+57 (4) 2686786', 
+                bold: false
+                , color: "black" 
+            }
           ],
           bold : true,
           color: "red",
@@ -167,7 +201,11 @@ module.exports = {
         {
           text: [
             'Mobile: ',
-            { text: '+57 (300) 3054080', bold: false, color: "black" }
+            { 
+                text: '+57 (300) 3054080', 
+                bold: false, 
+                color: "black" 
+            }
           ],
           bold : true,
           color: "red",
